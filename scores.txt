@@ -1,5 +1,11 @@
 99
 BOB
+88
+GOB
+72
+PKL
+71
+JON
 70
 FSH
 60
@@ -10,3 +16,5 @@ DEF
 ABC
 20
 PEN
+01
+BIG
