@@ -219,7 +219,7 @@ int main(int argc, char* argv[]) {
 
     if (userStart == 121) { // Checks if user entered g to start the game. 121 is ascii value of y
 
-        for(i = 0; i < 35; i++) {=
+        for(i = 0; i < 35; i++) {
             for(j = 0; j < 35; j++) {
                 printf("%c", x[i][j]);
                 column++;
