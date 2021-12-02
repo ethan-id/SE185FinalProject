@@ -12,11 +12,42 @@
 -								Includes									 -
 -----------------------------------------------------------------------------*/
 #include <stdio.h>
+#include <ncurses.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define WORDLENGTH 11
+#define MAXWORDS 100
+
+int read_words(char* WL[MAXWORDS], char* file_name);
+void trimws(char* str);
 
 /*----------------------------------------------------------------------------
 -								Implementation								 -
 -----------------------------------------------------------------------------*/
-int main() {
+int main(int argc, char* argv[]) {
+    WINDOW *my_window;
+	char* wordlist[MAXWORDS];
+    int i;
+    wordcount = read_words(wordlist, argv[1]);
+
+    initscr();
+
+    for(i = 0; i < wordcount; i++){
+        mvprintw(row, column, wordlist[i]);
+        column += 15;
+
+        if (column == 85){
+            column = 10;
+            row++;
+        }
+	}
+    printf("\n");
+    
+	refresh();
+    getchar();
+    endwin();
+
 
 
 
