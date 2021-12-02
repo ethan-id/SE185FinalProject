@@ -26,6 +26,7 @@
 int read_words(char* WL[MAXWORDS], char* file_name);
 void trimws(char* str);
 
+
 /*----------------------------------------------------------------------------
 -								Implementation								 -
 -----------------------------------------------------------------------------*/
@@ -68,34 +69,35 @@ int main(int argc, char* argv[]) {
     WINDOW *my_window;
     int wordcount;
 	char* wordlist[MAXWORDS];
+    char userStart;
     int i, j, row, column;
-    // wordcount = read_words(wordlist, argv[1]);
 
-    // initscr();
+    printf("Welcome to the Memory Game.\nTo Start the game press \"g\".\nIn the game various shapes will appear with a circle around it.\nYou must remember the shapes that are circled and repeat the order.\nUse w for up, s for down, d for right, and a for left.\n");
+    scanf("%c", &userStart);
 
-    // for(i = 0; i < wordcount; i++){
-    //     mvprintw(0, 0, wordlist[i]);
+    if(!strcmp(userStart, 'g')){
         
-	// }
-    // printf("\n");
-
-    for(i = 0; i < 35; i++){
-        for(j = 0; j < 35; j++){
-            printf("%c", x[i][j]);
-            column++;
-        }
-        printf("\n");
-        column = 0;
-        row++;
+        for(i = 0; i < 35; i++){
+        
+            for(j = 0; j < 35; j++){
+                printf("%c", x[i][j]);
+                column++;
+            }
+        
+            printf("\n");
+            column = 0;
+            row++;
+        
+        }   
     }
-    
-	// refresh();
-    // getchar();
-    // endwin();
+    else{
+        printf("Thanks for playing!");
 
+        return 0;
+    }
 }
 
-void trimws(char* str) {
+void trimws(char* str) { // Trims the white space of the text file.
 	int length = strlen(str);
 	int x;
 	if (length == 0) return;
@@ -106,7 +108,7 @@ void trimws(char* str) {
 	}
 }
 
-int read_words(char* WL[MAXWORDS], char* file_name)
+int read_words(char* WL[MAXWORDS], char* file_name)// Reads the texxt file.
 {
 	int numread = 0;
 	char line[WORDLENGTH];
