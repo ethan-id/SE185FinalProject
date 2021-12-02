@@ -183,12 +183,12 @@ const char t[35][35] = {
 int main(int argc, char* argv[]) {
     
     
-    WINDOW *my_window;
+    
     int wordcount;
 	char* scoresList[MAXWORDS];
     char userStart;
-    int i, j, row, column;
-    int turn = 1;
+    int i, j;
+    int turn = 3;
     int shape;
 
     srand(time(0));
@@ -232,46 +232,74 @@ int main(int argc, char* argv[]) {
 }
 
 void randomShapes(int turns){
-    int j, i;
+    int h, j, i;
     int shape;
+    int row, column;
+    WINDOW *my_window;
 
     srand(time(0));
+    initscr();
 
-    for(j = 0; j < turns; j++){
-    shape = (rand() % 4) + 1;
+    for(h = 0; h < turns; h++){
+        row = 0;
+        column = 0;
+        shape = (rand() % 4) + 1;
+
+        
         
         if(shape == 1){
             for(i = 0; i < 35; i++) {
                 for(j = 0; j < 35; j++) {
-                    printf("%c", t[i][j]);
+                    mvprintw(row, column, "%c", t[i][j]);
+                    column++;
                 }
-                printf("\n");
-            } 
+                column = 0;
+                row++;
+                
+            }
+            refresh();
+            sleep(1); 
         }else if(shape == 2){
             for(i = 0; i < 35; i++) {
                 for(j = 0; j < 35; j++) {
-                    printf("%c", s[i][j]);                   
-                }           
-                printf("\n");                
-            } 
+                    mvprintw(row, column, "%c", s[i][j]);                   
+                    column++;
+                }
+                
+                column = 0;
+                row++;                   
+            }
+            refresh();
+            sleep(1);  
         }else if(shape == 3){
             for(i = 0; i < 35; i++) {
                 for(j = 0; j < 35; j++) {
-                    printf("%c", x[i][j]);                 
-                }           
-                printf("\n");            
+                    mvprintw(row, column, "%c", x[i][j]);                 
+                    column++;
+                }
+                column = 0;
+                row++;          
+                          
             } 
+            refresh();
+            sleep(1); 
         }else if(shape == 4){
             for(i = 0; i < 35; i++) {
                 for(j = 0; j < 35; j++) {
-                    printf("%c", c[i][j]);
+                    mvprintw(row, column, "%c", c[i][j]);
+                    column++;
                 }
-                printf("\n");
-            } 
+                column = 0;
+                row++;
+            }
+            refresh();
+            sleep(1);
         }
+        // wclear(my_window);
     }
     
-
+    
+    endwin();
 }
 
 void trimws(char* str) { // Trims the white space of the text file.
