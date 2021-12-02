@@ -243,7 +243,7 @@ int main(int argc, char* argv[]) {
                 column = 0;
                 row++;
             } 
-        }else  if(shape == 3){
+        }else if(shape == 3){
             for(i = 0; i < 35; i++) {
                 for(j = 0; j < 35; j++) {
                     printf("%c", x[i][j]);
@@ -265,7 +265,7 @@ int main(int argc, char* argv[]) {
                 column = 0;
                 row++;
             } 
-        }else
+        }
     } else {
         printf("Thanks for playing!");
         return 0;
