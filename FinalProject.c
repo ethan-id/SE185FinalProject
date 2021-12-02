@@ -15,6 +15,9 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include <math.h>
+#include <unistd.h>
+#include <ctype.h>
+#include <string.h>
 
 #define WORDLENGTH 11
 #define MAXWORDS 100
@@ -27,6 +30,7 @@ void trimws(char* str);
 -----------------------------------------------------------------------------*/
 int main(int argc, char* argv[]) {
     WINDOW *my_window;
+    int wordcount;
 	char* wordlist[MAXWORDS];
     int i;
     wordcount = read_words(wordlist, argv[1]);
@@ -34,16 +38,11 @@ int main(int argc, char* argv[]) {
     initscr();
 
     for(i = 0; i < wordcount; i++){
-        mvprintw(row, column, wordlist[i]);
-        column += 15;
-
-        if (column == 85){
-            column = 10;
-            row++;
-        }
+        mvprintw(0, 0, wordlist[i]);
+        
 	}
     printf("\n");
-    
+
 	refresh();
     getchar();
     endwin();
@@ -51,4 +50,35 @@ int main(int argc, char* argv[]) {
 
 
 
+}
+
+void trimws(char* str) {
+	int length = strlen(str);
+	int x;
+	if (length == 0) return;
+	x = length - 1;
+	while (isspace(str[x]) && (x >= 0)) {
+		str[x] = '\0';
+		x -= 1;
+	}
+}
+
+int read_words(char* WL[MAXWORDS], char* file_name)
+{
+	int numread = 0;
+	char line[WORDLENGTH];
+	char *p;
+	FILE* fp = fopen(file_name, "r");
+	while (!feof(fp)) {
+		p = fgets(line, WORDLENGTH, fp);
+		if (p != NULL) 
+		{
+			trimws(line);
+			WL[numread] = (char *)malloc(strlen(line) + 1);
+			strcpy(WL[numread], line);
+			numread++;
+		}
+	}
+	fclose(fp);
+	return numread;
 }
