@@ -191,28 +191,31 @@ int main(int argc, char* argv[]) {
 
     read_words(wordlist, argv[1]);
 
-    // for(int i = 0; i < MAXWORDS; i++) {
-    //     if(wordlist[i] != NULL) {
-    //         printf("%s ", wordlist[i]);
-    //     }
-    // }
-
     printf("\nWelcome to the Memory Game.\nTo Start the game press \"g\".\nIn the game various shapes will appear with a circle around it.\nYou must remember the shapes that are circled and repeat the order.\nUse w for up, s for down, d for right, and a for left.\n");
+    printf("\nHighscores:\n");
+    printf("Rank  Score   Name\n");
 
-    printf("\nHighscore Table:\n");
-
+    int k = 0;
     for(int i = 0; i < MAXWORDS; i++) {
         if (i % 2 == 0) {
             printf("\n");
+            k++;
+            if(k != 10) {
+                printf(" %d     ", k);
+            } else {
+                printf("%d     ", k);
+            }
         }
         if(wordlist[i] != NULL) {
-            printf("%s ", wordlist[i]);
+            printf("%s     ", wordlist[i]);
         }
     }
 
+    printf("\n\n~:");
+
     scanf("%c", &userStart);
 
-    if(userStart == 103){//Checks if user entered g to start the game.
+    if(userStart == 103){ // Checks if user entered g to start the game. 103 is ascii value of g
         
         for(i = 0; i < 35; i++){
         
