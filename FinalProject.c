@@ -182,19 +182,21 @@ int main(int argc, char* argv[]) {
     
     WINDOW *my_window;
     int wordcount;
-	char* wordlist[MAXWORDS];
+	char* scoresList[MAXWORDS];
     char userStart;
     int i, j, row, column;
     int turn = 1;
 
     srand(time(0));
 
-    read_words(wordlist, argv[1]);
+    // Reading from the scores.txt file and populating scoresList with its data
+    read_words(scoresList, argv[1]);
 
-    printf("\nWelcome to the Memory Game.\nTo Start the game press \"g\".\nIn the game various shapes will appear with a circle around it.\nYou must remember the shapes that are circled and repeat the order.\nUse w for up, s for down, d for right, and a for left.\n");
+    printf("\nWelcome to the Memory Game.\nTo Start the game press \"y\".\nIn the game various shapes will appear with a circle around it.\nYou must remember the shapes that are circled and repeat the order.\nUse w for up, s for down, d for right, and a for left.\n");
     printf("\nHighscores:\n");
     printf("Rank  Score   Name\n");
 
+    // This loop is what prints the high scores to the table properly formatted.
     int k = 0;
     for(int i = 0; i < MAXWORDS; i++) {
         if (i % 2 == 0) {
@@ -206,8 +208,8 @@ int main(int argc, char* argv[]) {
                 printf("%d     ", k);
             }
         }
-        if(wordlist[i] != NULL) {
-            printf("%s     ", wordlist[i]);
+        if(scoresList[i] != NULL) {
+            printf("%s     ", scoresList[i]);
         }
     }
 
@@ -215,7 +217,7 @@ int main(int argc, char* argv[]) {
 
     scanf("%c", &userStart);
 
-    if(userStart == 103){ // Checks if user entered g to start the game. 103 is ascii value of g
+    if(userStart == 121){ // Checks if user entered g to start the game. 121 is ascii value of y
         
         for(i = 0; i < 35; i++){
         
