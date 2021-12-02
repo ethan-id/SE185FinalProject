@@ -26,7 +26,6 @@
 int read_words(char* WL[MAXWORDS], char* file_name);
 void trimws(char* str);
 
-
 /*----------------------------------------------------------------------------
 -								Implementation								 -
 -----------------------------------------------------------------------------*/
@@ -71,6 +70,12 @@ int main(int argc, char* argv[]) {
 	char* wordlist[MAXWORDS];
     char userStart;
     int i, j, row, column;
+
+    read_words(wordlist, argv[1]);
+
+    for(int i = 0; i < MAXWORDS; i++) {
+        printf("%s ", wordlist[i]);
+    }
 
     printf("Welcome to the Memory Game.\nTo Start the game press \"g\".\nIn the game various shapes will appear with a circle around it.\nYou must remember the shapes that are circled and repeat the order.\nUse w for up, s for down, d for right, and a for left.\n");
     scanf("%c", &userStart);
