@@ -21,7 +21,7 @@
 
 #define MAXTURNS 99
 #define WORDLENGTH 11
-#define MAXWORDS 100
+#define MAXWORDS 20
 
 int read_words(char* WL[MAXWORDS], char* file_name);
 void trimws(char* str);
@@ -188,11 +188,25 @@ int main(int argc, char* argv[]) {
 
     read_words(wordlist, argv[1]);
 
+    // for(int i = 0; i < MAXWORDS; i++) {
+    //     if(wordlist[i] != NULL) {
+    //         printf("%s ", wordlist[i]);
+    //     }
+    // }
+
+    printf("\nWelcome to the Memory Game.\nTo Start the game press \"g\".\nIn the game various shapes will appear with a circle around it.\nYou must remember the shapes that are circled and repeat the order.\nUse w for up, s for down, d for right, and a for left.\n");
+
+    printf("\nHighscore Table:\n");
+
     for(int i = 0; i < MAXWORDS; i++) {
-        printf("%s ", wordlist[i]);
+        if (i % 2 == 0) {
+            printf("\n");
+        }
+        if(wordlist[i] != NULL) {
+            printf("%s ", wordlist[i]);
+        }
     }
 
-    printf("Welcome to the Memory Game.\nTo Start the game press \"g\".\nIn the game various shapes will appear with a circle around it.\nYou must remember the shapes that are circled and repeat the order.\nUse w for up, s for down, d for right, and a for left.\n");
     scanf("%c", &userStart);
 
     if(userStart == 103){//Checks if user entered g to start the game.
@@ -216,7 +230,7 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
-    printf("Highscore Table:\n");
+    
 }
 
 void trimws(char* str) { // Trims the white space of the text file.
