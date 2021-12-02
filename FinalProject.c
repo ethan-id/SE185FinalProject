@@ -198,7 +198,7 @@ int main(int argc, char* argv[]) {
 
     // This loop is what prints the high scores to the table properly formatted.
     int k = 0;
-    for(int i = 0; i < MAXWORDS; i++) {
+    for (int i = 0; i < MAXWORDS; i++) {
         if (i % 2 == 0) {
             printf("\n");
             k++;
@@ -217,11 +217,10 @@ int main(int argc, char* argv[]) {
 
     scanf("%c", &userStart);
 
-    if(userStart == 121){ // Checks if user entered g to start the game. 121 is ascii value of y
-        
-        for(i = 0; i < 35; i++){
-        
-            for(j = 0; j < 35; j++){
+    if (userStart == 121) { // Checks if user entered g to start the game. 121 is ascii value of y
+
+        for(i = 0; i < 35; i++) {=
+            for(j = 0; j < 35; j++) {
                 printf("%c", x[i][j]);
                 column++;
             }
@@ -229,12 +228,9 @@ int main(int argc, char* argv[]) {
             printf("\n");
             column = 0;
             row++;
-        
         }   
-    }
-    else{
+    } else {
         printf("Thanks for playing!");
-
         return 0;
     }
 
