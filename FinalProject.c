@@ -23,6 +23,7 @@
 #define MAXTURNS 99
 #define WORDLENGTH 11
 #define MAXWORDS 20
+#define SHAPES 99
 
 int read_words(char* WL[MAXWORDS], char* file_name);
 void trimws(char* str);
@@ -187,7 +188,8 @@ int main(int argc, char* argv[]) {
     char userStart;
     int i, j;
     int turn = 3;
-    int shape;
+    int shape, score;
+    int shapesSelected[SHAPES];
 
     srand(time(0));
 
@@ -227,6 +229,9 @@ int main(int argc, char* argv[]) {
         printf("Thanks for playing!");
         return 0;
     }
+
+    printf("Turn: %d\nScore: %d\nOkay, what was the order?(Use w, a, s, d)\n", turn, score);
+
 }
 
 void randomShapes(int turns){
