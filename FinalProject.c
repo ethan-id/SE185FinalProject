@@ -27,7 +27,7 @@
 
 int read_words(char* WL[MAXWORDS], char* file_name);
 void trimws(char* str);
-void randomShapes(int turns);
+void randomShapes(int *index);
 
 const char x[35][35] = {
     {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -187,9 +187,10 @@ int main(int argc, char* argv[]) {
 	char* scoresList[MAXWORDS];
     char userStart;
     int i, j;
-    int turn = 3;
-    int shape, score;
+    int turn = 2;
+    int shape, score = 0;
     int shapesSelected[SHAPES];
+    int userInput[SHAPES];
 
     srand(time(0));
 
@@ -224,17 +225,62 @@ int main(int argc, char* argv[]) {
     scanf("%c", &userStart);
 
     if (userStart == 121) { // Checks if user entered g to start the game. 121 is ascii value of y
-      randomShapes(turn);  
+        // randomShapes(turn);  
+        for (int i = 0; i < turn; i++) {
+            randomShapes(&shapesSelected[i]);
+        }
     } else {
         printf("Thanks for playing!");
         return 0;
     }
 
+
     printf("Turn: %d\nScore: %d\nOkay, what was the order?(Use w, a, s, d)\n", turn, score);
 
+    for(int i = 0; i < turn; i++) {
+        int val = 0;
+        char input;
+        char trueShape;
+
+        printf("%d time: ", i+1);
+        
+        scanf(" %c", &input);
+        
+        if(input == 119){
+            userInput[i] = 1;
+        }
+        if(input == 97){
+            userInput[i] = 2;
+        }
+        if(input == 115){
+            userInput[i] = 3;
+        }
+        if(input == 100){
+            userInput[i] = 4;
+        }
+
+        if(shapesSelected[i] == 1){
+            trueShape = 'w';
+        }else if(shapesSelected[i] == 2){
+            trueShape = 'a';
+        }else if(shapesSelected[i] == 3){
+            trueShape = 's';
+        }else if(shapesSelected[i] == 4){
+            trueShape = 'd';
+        }
+
+        
+        if(userInput[i] == shapesSelected[i]){
+            score++;
+            printf("Score: %d\n", score);
+        }else{
+            printf("Nope the correct answer was %c.\nSorry, you lose, at least you got to turn %d.\nYour final score was %d. Try again and get even higher!", trueShape, turn, score);
+            return 0;
+        }
+    }
 }
 
-void randomShapes(int turns){
+void randomShapes(int *index){
     int h, j, i;
     int shape;
     int row, column;
@@ -243,58 +289,59 @@ void randomShapes(int turns){
     srand(time(0));
     initscr();
 
-    for (h = 0; h < turns; h++) {
-        row = 0;
-        column = 0;
-        shape = (rand() % 4) + 1;
-        if (shape == 1) {
-            for(i = 0; i < 35; i++) {
-                for(j = 0; j < 35; j++) {
-                    mvprintw(row, column, "%c", t[i][j]);
-                    column++;
-                }
-                column = 0;
-                row++;
-                
+    row = 0;
+    column = 0;
+    shape = (rand() % 4) + 1;
+
+    *index = shape;
+
+    if (shape == 1) {
+        for(i = 0; i < 35; i++) {
+            for(j = 0; j < 35; j++) {
+                mvprintw(row, column, "%c", t[i][j]);
+                column++;
             }
-            refresh();
-            sleep(1); 
-        } else if (shape == 2) {
-            for (i = 0; i < 35; i++) {
-                for (j = 0; j < 35; j++) {
-                    mvprintw(row, column, "%c", s[i][j]);                   
-                    column++;
-                }
-                column = 0;
-                row++;                   
-            }
-            refresh();
-            sleep(1);  
-        } else if(shape == 3){
-            for (i = 0; i < 35; i++) {
-                for (j = 0; j < 35; j++) {
-                    mvprintw(row, column, "%c", x[i][j]);                 
-                    column++;
-                }
-                column = 0;
-                row++;
-            } 
-            refresh();
-            sleep(1); 
-        } else if (shape == 4) {
-            for (i = 0; i < 35; i++) {
-                for (j = 0; j < 35; j++) {
-                    mvprintw(row, column, "%c", c[i][j]);
-                    column++;
-                }
-                column = 0;
-                row++;
-            }
-            refresh();
-            sleep(1);
+            column = 0;
+            row++;
+            
         }
-        // wclear(my_window);
+        refresh();
+        sleep(1); 
+    } else if (shape == 2) {
+        for (i = 0; i < 35; i++) {
+            for (j = 0; j < 35; j++) {
+                mvprintw(row, column, "%c", s[i][j]);                   
+                column++;
+            }
+            column = 0;
+            row++;                   
+        }
+        refresh();
+        sleep(1);  
+    } else if(shape == 3){
+        for (i = 0; i < 35; i++) {
+            for (j = 0; j < 35; j++) {
+                mvprintw(row, column, "%c", x[i][j]);                 
+                column++;
+            }
+            column = 0;
+            row++;
+        } 
+        refresh();
+        sleep(1); 
+    } else if (shape == 4) {
+        for (i = 0; i < 35; i++) {
+            for (j = 0; j < 35; j++) {
+                mvprintw(row, column, "%c", c[i][j]);
+                column++;
+            }
+            column = 0;
+            row++;
+        }
+        refresh();
+        sleep(1);
     }
+    // wclear(my_window);
     endwin();
 }
 
