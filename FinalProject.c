@@ -286,20 +286,32 @@ int main(int argc, char* argv[]) {
                     score++;
                     printf("Score: %d\n", score);                    
                 }else{
-                    printf("Nope the correct answer was %c.\nSorry, you lose, at least you got to turn %d.\nYour final score was %d. Try again and get even higher!", trueShape, turn, score);                    
-                    
-                    for(int i = 9; i >= 0; i--){
-                        if(score < scores[i]){//check if score is high score
-                            return 0;
-                        }else{//if it is, ask for username
-                            printf("Congratulations, you made it on the high score table.\nPlease enter your name (Only 3 capital letters):");
-                            
-                            scanf("%s", userName);
+                    printf("Nope the correct answer was %c.\nSorry, you lose, at least you got to turn %d.\nYour final score was %d. \nTry again and get even higher!\n", trueShape, turn, score);
 
-                            //write to scores.txt
-                            return 0;
+                    int index;
+                    for(int i = 0; i < 10; i++){
+                        if(score > scores[i]){ //if user's score is a highscore, ask for name
+                            printf("Congratulations, you made it on the high score table.\nPlease enter your name (Only 3 capital letters):");
+                            scanf("%s", userName);
+                            index = i;
+                            break;
                         }
-                    }                    
+                    }
+
+                    for(int i = 0; i < 10; i++){
+                        printf("\n%d", scores[i]);
+                    }
+
+                    for(int i = 9; i >= index; i--){
+                        scores[i] = scores[i - 1];
+                    }
+
+                    scores[index] = score;
+
+                    for(int i = 0; i < 10; i++){
+                        printf("\n%d", scores[i]);
+                    }
+
                     return 0;
                 }              
             }
