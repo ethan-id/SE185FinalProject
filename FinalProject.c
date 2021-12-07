@@ -20,6 +20,7 @@
 #include <string.h>
 #include <time.h>
 
+#define NAMESMAX 10
 #define MAXTURNS 99
 #define WORDLENGTH 11
 #define MAXWORDS 20
@@ -193,7 +194,7 @@ int main(int argc, char* argv[]) {
     int userInput[SHAPES];
     int scores[10];
     char userName[3];
-    char* names[10];
+    char names[NAMESMAX][3];
 
     srand(time(0));
     shape = (rand() % 4) + 1;
@@ -228,13 +229,12 @@ int main(int argc, char* argv[]) {
         m++;
     }
     
-    // int n = 0;
-    // for (int i = 1; i < MAXWORDS; i+=2){
-    //     strcpy(names[n], scoresFile[i]);
-    //     printf("%s", names[n]);
-    //     n++;
-        
-    // }
+    int n = 0;
+    for (int i = 1; i < MAXWORDS; i+=2){
+        strcpy(names[n], scoresFile[i]);
+        printf("%s, ", names[n]);
+        n++;
+    }
 
 
     printf("\n\n~:");
