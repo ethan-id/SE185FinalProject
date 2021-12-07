@@ -1,9 +1,9 @@
 /*----------------------------------------------------------------------------
 -		    SE 185: Final Project - Memory Game                 		 	 -/* 
--   Team member 1 "Ethan Hancock" | "%"                                      -   
--   Team member 2 "Joseph Chalupa" | "%"                                     -
--   Team member 3 "Anthony Phan" | "%"                                       -
--   Team member 4 "Levi Sissel" | "%"                                        -
+-   Team member 1 "Ethan Hancock" | "35%"                                      -   
+-   Team member 2 "Joseph Chalupa" | "35%"                                     -
+-   Team member 3 "Anthony Phan" | "15%"                                       -
+-   Team member 4 "Levi Sissel" | "15%"                                        -
 - 	Section: 7															     -
 -	Date: 12/1/2021														     -
 -----------------------------------------------------------------------------*/
@@ -302,8 +302,14 @@ int main(int argc, char* argv[]) {
                         printf("\n%d", scores[i]);
                     }
 
+                    // Insert new highscore into scores[]
                     for(int i = 9; i >= index; i--){
                         scores[i] = scores[i - 1];
+                    }
+
+                    // Insert new name into names[]
+                    for(int i = 9; i >= index; i--){
+                        names[i] = names[i - 1];
                     }
 
                     scores[index] = score;
