@@ -291,17 +291,13 @@ int main(int argc, char* argv[]) {
                     int index;
                     for(int i = 0; i < 10; i++){
                         if(score > scores[i]){ //if user's score is a highscore, ask for name
-                            printf("Congratulations, you made it on the high score table.\nPlease enter your name (Only 3 capital letters):");
+                            printf("Congratulations, you made it on the high score table.\nPlease enter your name (Only 3 capital letters): ");
                             scanf("%s", userName);
                             index = i;
                             break;
                         }
                     }
-
-                    for(int i = 0; i < 10; i++){
-                        printf("\n%d", scores[i]);
-                    }
-
+                    
                     // Insert new highscore into scores[]
                     for(int i = 9; i >= index; i--){
                         scores[i] = scores[i - 1];
@@ -309,14 +305,23 @@ int main(int argc, char* argv[]) {
 
                     // Insert new name into names[]
                     for(int i = 9; i >= index; i--){
-                        names[i] = names[i - 1];
+                        strcpy(names[i], names[i - 1]);
                     }
 
+                    strcpy(names[index], userName);
                     scores[index] = score;
 
                     for(int i = 0; i < 10; i++){
                         printf("\n%d", scores[i]);
                     }
+                    for(int i = 0; i < 10; i++){
+                        printf("\n%s", names[i]);
+                    }
+
+                    // Printing new scores and names
+                    // for(int i = 0; i < 10; i++){
+                    //     printf("\n%d : %s", scores[i], names[i]);
+                    // }
 
                     return 0;
                 }              
