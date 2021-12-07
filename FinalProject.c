@@ -241,7 +241,7 @@ int main(int argc, char* argv[]) {
 
     scanf("%c", &userStart);
     
-    if (userStart == 121) { // Checks if user entered g to start the game. 121 is ascii value of y
+    if (userStart == 121) { // Checks if user entered y to start the game. 121 is ascii value of y
         // randomShapes(turn);
         while(1){
             for (int i = 0; i < turn; i++) {
@@ -287,11 +287,13 @@ int main(int argc, char* argv[]) {
                     printf("Score: %d\n", score);                    
                 }else{
                     printf("Nope the correct answer was %c.\nSorry, you lose, at least you got to turn %d.\nYour final score was %d. Try again and get even higher!", trueShape, turn, score);                    
-                    for(int i = 10; i >= 0; i--){
-                        if(score <= scores[i]){//check if score is high score
+                    
+                    for(int i = 9; i >= 0; i--){
+                        if(score < scores[i]){//check if score is high score
                             return 0;
                         }else{//if it is, ask for username
                             printf("Congratulations, you made it on the high score table.\nPlease enter your name (Only 3 capital letters):");
+                            
                             scanf("%s", userName);
 
                             //write to scores.txt
