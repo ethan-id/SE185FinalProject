@@ -184,20 +184,22 @@ const char t[35][35] = {
 int main(int argc, char* argv[]) {
 
     int wordcount;
-	char* scoresList[MAXWORDS];
+	char* scoresFile[MAXWORDS];
     char userStart;
     int i, j;
-    int turn = 2;
+    int turn = 1;
     int shape, score = 0;
     int shapesSelected[SHAPES];
     int userInput[SHAPES];
+    int scores[10];
+    char userName[3];
+    char* names[10];
 
     srand(time(0));
-
     shape = (rand() % 4) + 1;
 
-    // Reading from the scores.txt file and populating scoresList with its data
-    read_words(scoresList, argv[1]);
+    // Reading from the scores.txt file and populating scoresFile with its data
+    read_words(scoresFile, argv[1]);
 
     printf("\nWelcome to the Memory Game.\nTo Start the game press \"y\".\nIn the game various shapes will appear with a circle around it.\nYou must remember the shapes that are circled and repeat the order.\nUse w for up, s for down, d for right, and a for left.\n");
     printf("\nHighscores:\n");
@@ -215,19 +217,98 @@ int main(int argc, char* argv[]) {
                 printf("%d     ", k);
             }
         }
-        if(scoresList[i] != NULL) {
-            printf("%s     ", scoresList[i]);
+        if(scoresFile[i] != NULL) {
+            printf("%s     ", scoresFile[i]);
         }
     }
+
+    int m = 0;
+    for (int i = 0; i < MAXWORDS; i+=2){
+        scores[m] = atoi(scoresFile[i]);
+        m++;
+    }
+    
+    // int n = 0;
+    // for (int i = 1; i < MAXWORDS; i+=2){
+    //     strcpy(names[n], scoresFile[i]);
+    //     printf("%s", names[n]);
+    //     n++;
+        
+    // }
+
 
     printf("\n\n~:");
 
     scanf("%c", &userStart);
-
+    
     if (userStart == 121) { // Checks if user entered g to start the game. 121 is ascii value of y
-        // randomShapes(turn);  
-        for (int i = 0; i < turn; i++) {
-            randomShapes(&shapesSelected[i]);
+        // randomShapes(turn);
+        while(1){
+            for (int i = 0; i < turn; i++) {
+                randomShapes(&shapesSelected[i]);
+            }
+
+            printf("Turn: %d\nScore: %d\nOkay, what was the order?(Use w, a, s, d)\n", turn, score);
+
+            for(int i = 0; i < turn; i++) {
+                int val = 0;
+                char input;
+                char trueShape;
+
+                printf("%d time: ", i+1);
+                
+                scanf(" %c", &input);
+                
+                if(input == 119){
+                    userInput[i] = 1;
+                }
+                if(input == 97){
+                    userInput[i] = 2;
+                }
+                if(input == 115){
+                    userInput[i] = 3;
+                }
+                if(input == 100){
+                    userInput[i] = 4;
+                }
+
+                if(shapesSelected[i] == 1){
+                    trueShape = 'w';
+                }else if(shapesSelected[i] == 2){
+                    trueShape = 'a';
+                }else if(shapesSelected[i] == 3){
+                    trueShape = 's';
+                }else if(shapesSelected[i] == 4){
+                    trueShape = 'd';
+                }
+
+                if(userInput[i] == shapesSelected[i]){
+                    score++;
+                    printf("Score: %d\n", score);                    
+                }else{
+                    printf("Nope the correct answer was %c.\nSorry, you lose, at least you got to turn %d.\nYour final score was %d. Try again and get even higher!", trueShape, turn, score);                    
+                    for(int i = 10; i >= 0; i--){
+                        if(score <= scores[i]){//check if score is high score
+                            return 0;
+                        }else{//if it is, ask for username
+                            printf("Congratulations, you made it on the high score table.\nPlease enter your name (Only 3 capital letters):");
+                            scanf("%s", userName);
+
+                            //write to scores.txt
+                            return 0;
+                        }
+                    }                    
+                    return 0;
+                }              
+            }
+            printf("\nGood job, get ready for the next round.");
+            printf("\n3...");
+            sleep(1);
+            printf("\n2...");
+            sleep(1);
+            printf("\n1...\n");
+            sleep(1.5);
+            turn++;
         }
     } else {
         printf("Thanks for playing!");
@@ -235,49 +316,7 @@ int main(int argc, char* argv[]) {
     }
 
 
-    printf("Turn: %d\nScore: %d\nOkay, what was the order?(Use w, a, s, d)\n", turn, score);
-
-    for(int i = 0; i < turn; i++) {
-        int val = 0;
-        char input;
-        char trueShape;
-
-        printf("%d time: ", i+1);
-        
-        scanf(" %c", &input);
-        
-        if(input == 119){
-            userInput[i] = 1;
-        }
-        if(input == 97){
-            userInput[i] = 2;
-        }
-        if(input == 115){
-            userInput[i] = 3;
-        }
-        if(input == 100){
-            userInput[i] = 4;
-        }
-
-        if(shapesSelected[i] == 1){
-            trueShape = 'w';
-        }else if(shapesSelected[i] == 2){
-            trueShape = 'a';
-        }else if(shapesSelected[i] == 3){
-            trueShape = 's';
-        }else if(shapesSelected[i] == 4){
-            trueShape = 'd';
-        }
-
-        
-        if(userInput[i] == shapesSelected[i]){
-            score++;
-            printf("Score: %d\n", score);
-        }else{
-            printf("Nope the correct answer was %c.\nSorry, you lose, at least you got to turn %d.\nYour final score was %d. Try again and get even higher!", trueShape, turn, score);
-            return 0;
-        }
-    }
+    
 }
 
 void randomShapes(int *index){
