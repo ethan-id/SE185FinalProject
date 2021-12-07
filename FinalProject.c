@@ -194,7 +194,7 @@ int main(int argc, char* argv[]) {
     int userInput[SHAPES];
     int scores[10];
     char userName[3];
-    char names[NAMESMAX][3];
+    char names[NAMESMAX][4];
 
     srand(time(0));
     shape = (rand() % 4) + 1;
@@ -232,7 +232,6 @@ int main(int argc, char* argv[]) {
     int n = 0;
     for (int i = 1; i < MAXWORDS; i+=2){
         strcpy(names[n], scoresFile[i]);
-        printf("%s, ", names[n]);
         n++;
     }
 
@@ -288,6 +287,13 @@ int main(int argc, char* argv[]) {
                 }else{
                     printf("Nope the correct answer was %c.\nSorry, you lose, at least you got to turn %d.\nYour final score was %d. \nTry again and get even higher!\n", trueShape, turn, score);
 
+                    for(int i = 0; i < 10; i++){
+                        printf("\n%d", scores[i]);
+                    }
+                    for(int i = 0; i < 10; i++){
+                        printf("\n%s, ", names[i]);
+                    }
+
                     int index;
                     for(int i = 0; i < 10; i++){
                         if(score > scores[i]){ //if user's score is a highscore, ask for name
@@ -297,31 +303,39 @@ int main(int argc, char* argv[]) {
                             break;
                         }
                     }
-                    
+
+                    // for(int i = 0; i < 10; i++){
+                    //     printf("\n%d", scores[i]);
+                    // }
                     // Insert new highscore into scores[]
                     for(int i = 9; i >= index; i--){
                         scores[i] = scores[i - 1];
                     }
+                    scores[index] = score;
 
+                    // for(int i = 0; i < 10; i++){
+                    //     printf("\n%s, ", names[i]);
+                    // }
                     // Insert new name into names[]
                     for(int i = 9; i >= index; i--){
                         strcpy(names[i], names[i - 1]);
                     }
-
                     strcpy(names[index], userName);
-                    scores[index] = score;
 
-                    for(int i = 0; i < 10; i++){
-                        printf("\n%d", scores[i]);
-                    }
-                    for(int i = 0; i < 10; i++){
-                        printf("\n%s", names[i]);
-                    }
 
                     // Printing new scores and names
-                    // for(int i = 0; i < 10; i++){
-                    //     printf("\n%d : %s", scores[i], names[i]);
-                    // }
+                    for(int i = 0; i < 10; i++){
+                        printf("\n%d : %s", scores[i], names[i]);
+                    }
+
+                    // Overwriting scores.txt
+                    FILE* fp = fopen("scores.txt", "w");
+                    for(int i = 0; i < 10; i++){
+                        char str[3];
+                        // itoa(scores[i], str, 10);
+                        fprintf(fp, "%d\n%s\n", scores[i], names[i]);
+                    }
+                    fclose(fp);
 
                     return 0;
                 }              

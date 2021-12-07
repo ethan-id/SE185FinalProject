@@ -1,4 +1,4 @@
-99
+0
 BOB
 88
 GOB
@@ -14,7 +14,7 @@ PCK
 DEF
 10
 ABC
-05
+6
+CUM
+5
 PEN
-01
-BIG
