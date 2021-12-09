@@ -14,7 +14,7 @@ PCK
 DEF
 21
 FED
-05
+5
 CHK
-02
-PEP
+4
+PEN

@@ -283,7 +283,6 @@ int main(int argc, char* argv[]) {
                 }else{ // If you enter the wrong letter
                     printf("Nope the correct answer was %c.\nSorry, you lose, at least you got to turn %d.\nYour final score was %d. \nTry again and get even higher!\n", trueShape, turn, score);
 
-                    
                     int index;
                     for(int i = 0; i < 10; i++){
                         if(score > scores[i]){ // if user's score is a highscore, ask for name
@@ -294,22 +293,24 @@ int main(int argc, char* argv[]) {
                         }
                     }
 
-                    // Insert new highscore into scores[]
+                    // Move scores beneath new highscore down by one
                     for(int i = 9; i >= index; i--){
                         scores[i] = scores[i - 1];
                     }
+                    // Insert new highscore into scores[]
                     scores[index] = score;
                    
-                    // Insert new name into names[]
+                    // Move names beneath new name down by one
                     for(int i = 9; i >= index; i--){
                         strcpy(names[i], names[i - 1]);
                     }
+                    // Insert new name into names[]
                     strcpy(names[index], userName);
 
                     // Printing new scores and names
                     scores[0] = temp;
                     for(int i = 0; i < 10; i++){
-                        printf("\n%d. %d %s", i, scores[i], names[i]);
+                        printf("\n%d. %d %s", i + 1, scores[i], names[i]);
                     }
                     
                     // Overwriting scores.txt
