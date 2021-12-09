@@ -187,7 +187,7 @@ int main(int argc, char* argv[]) {
     int wordcount;
 	char* scoresFile[MAXWORDS];
     char userStart;
-    int i, j;
+    int i, j, temp = 99;
     int turn = 1;
     int shape, score = 0;
     int shapesSelected[SHAPES];
@@ -195,9 +195,6 @@ int main(int argc, char* argv[]) {
     int scores[10];
     char userName[3];
     char names[NAMESMAX][4];
-
-    srand(time(0));
-    shape = (rand() % 4) + 1;
 
     // Reading from the scores.txt file and populating scoresFile with its data
     read_words(scoresFile, argv[1]);
@@ -223,18 +220,17 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    int m = 0;
+    int m = 0; //converts the score form the text file to actual ints in an array for later
     for (int i = 0; i < MAXWORDS; i+=2){
         scores[m] = atoi(scoresFile[i]);
         m++;
     }
     
-    int n = 0;
+    int n = 0;//Adds the names from the text file to an array for the names for later
     for (int i = 1; i < MAXWORDS; i+=2){
         strcpy(names[n], scoresFile[i]);
         n++;
     }
-
 
     printf("\n\n~:");
 
@@ -249,90 +245,76 @@ int main(int argc, char* argv[]) {
 
             printf("Turn: %d\nScore: %d\nOkay, what was the order?(Use w, a, s, d)\n", turn, score);
 
-            for(int i = 0; i < turn; i++) {
+            for(int i = 0; i < turn; i++) {//Starts the for loop to run for however many turns the variable turns is equal to.
                 int val = 0;
                 char input;
                 char trueShape;
 
-                printf("%d time: ", i+1);
+                printf("%d time: ", i+1);//Prints out how many times youve played this round
                 
-                scanf(" %c", &input);
+                scanf(" %c", &input); // scans the input the user is guessing
                 
-                if(input == 119){
+                if(input == 119){//checks if the user inputs 'w' using ASCII it will set the array spot of i to the value 1 for later use
                     userInput[i] = 1;
                 }
-                if(input == 97){
+                if(input == 97){//checks if the user inputs 'a' using ASCII it will set the array spot of i to the value 2 for later use
                     userInput[i] = 2;
                 }
-                if(input == 115){
+                if(input == 115){//checks if the user inputs 's' using ASCII it will set the array spot of i to the value 3 for later use
                     userInput[i] = 3;
                 }
-                if(input == 100){
+                if(input == 100){//checks if the user inputs 'd' using ASCII it will set the array spot of i to the value 4 for later use
                     userInput[i] = 4;
                 }
 
-                if(shapesSelected[i] == 1){
+                if(shapesSelected[i] == 1){//if the random shape that was selected was the w which equals 1, it will set the array i value to 1 
                     trueShape = 'w';
-                }else if(shapesSelected[i] == 2){
+                }else if(shapesSelected[i] == 2){//if the random shape that was selected was the a which equals 2, it will set the array i value to 1
                     trueShape = 'a';
-                }else if(shapesSelected[i] == 3){
+                }else if(shapesSelected[i] == 3){//if the random shape that was selected was the s which equals 3, it will set the array i value to 1
                     trueShape = 's';
-                }else if(shapesSelected[i] == 4){
+                }else if(shapesSelected[i] == 4){//if the random shape that was selected was the d which equals 4, it will set the array i value to 1
                     trueShape = 'd';
                 }
 
-                if(userInput[i] == shapesSelected[i]){
-                    score++;
-                    printf("Score: %d\n", score);                    
-                }else{
+                if(userInput[i] == shapesSelected[i]){ // Checks to see if the user inputs the right letter
+                    score++; // adds to the score
+                    printf("Score: %d\n", score); // prints your score              
+                }else{ // If you enter the wrong letter
                     printf("Nope the correct answer was %c.\nSorry, you lose, at least you got to turn %d.\nYour final score was %d. \nTry again and get even higher!\n", trueShape, turn, score);
 
-                    for(int i = 0; i < 10; i++){
-                        printf("\n%d", scores[i]);
-                    }
-                    for(int i = 0; i < 10; i++){
-                        printf("\n%s, ", names[i]);
-                    }
-
+                    
                     int index;
                     for(int i = 0; i < 10; i++){
-                        if(score > scores[i]){ //if user's score is a highscore, ask for name
+                        if(score > scores[i]){ // if user's score is a highscore, ask for name
                             printf("Congratulations, you made it on the high score table.\nPlease enter your name (Only 3 capital letters): ");
                             scanf("%s", userName);
-                            index = i;
-                            break;
+                            index = i; // Save the index where the highscore should be inserted.
+                            break; // Break for loop otherwise index will change on next iteration
                         }
                     }
 
-                    // for(int i = 0; i < 10; i++){
-                    //     printf("\n%d", scores[i]);
-                    // }
                     // Insert new highscore into scores[]
                     for(int i = 9; i >= index; i--){
                         scores[i] = scores[i - 1];
                     }
                     scores[index] = score;
-
-                    // for(int i = 0; i < 10; i++){
-                    //     printf("\n%s, ", names[i]);
-                    // }
+                   
                     // Insert new name into names[]
                     for(int i = 9; i >= index; i--){
                         strcpy(names[i], names[i - 1]);
                     }
                     strcpy(names[index], userName);
 
-
                     // Printing new scores and names
+                    scores[0] = temp;
                     for(int i = 0; i < 10; i++){
-                        printf("\n%d : %s", scores[i], names[i]);
+                        printf("\n%d. %d %s", i, scores[i], names[i]);
                     }
-
+                    
                     // Overwriting scores.txt
                     FILE* fp = fopen("scores.txt", "w");
                     for(int i = 0; i < 10; i++){
-                        char str[3];
-                        // itoa(scores[i], str, 10);
                         fprintf(fp, "%d\n%s\n", scores[i], names[i]);
                     }
                     fclose(fp);
@@ -340,16 +322,16 @@ int main(int argc, char* argv[]) {
                     return 0;
                 }              
             }
-            printf("\nGood job, get ready for the next round.");
+            printf("\nGood job, get ready for the next round.");//The countdown
             printf("\n3...");
             sleep(1);
             printf("\n2...");
             sleep(1);
             printf("\n1...\n");
             sleep(1.5);
-            turn++;
+            turn++;//adds to the amount of turns to run
         }
-    } else {
+    } else {//If they dont enter 'y'
         printf("Thanks for playing!");
         return 0;
     }
@@ -358,34 +340,34 @@ int main(int argc, char* argv[]) {
     
 }
 
-void randomShapes(int *index){
+void randomShapes(int *index){//picks and displays a random shape
     int h, j, i;
     int shape;
     int row, column;
     WINDOW *my_window;
 
-    srand(time(0));
+    srand(time(0));//seeds for the rand function
     initscr();
 
-    row = 0;
+    row = 0;//sets the row and columns for the mvprint function
     column = 0;
-    shape = (rand() % 4) + 1;
+    shape = (rand() % 4) + 1; //selects a random number from 1 - 4 for the shapes
 
     *index = shape;
 
-    if (shape == 1) {
+    if (shape == 1) {//if shape is 1 it will print a triangle with a box around it
         for(i = 0; i < 35; i++) {
             for(j = 0; j < 35; j++) {
-                mvprintw(row, column, "%c", t[i][j]);
-                column++;
+                mvprintw(row, column, "%c", t[i][j]);//adding each character to the window
+                column++;//moves the colum after every iteration
             }
-            column = 0;
-            row++;
+            column = 0;//resets column
+            row++;//iterates throught the rows
             
         }
-        refresh();
-        sleep(1); 
-    } else if (shape == 2) {
+        refresh();//prints to the window
+        sleep(1);//waits 1 sec after each selected shape for the next screen
+    } else if (shape == 2) {//if shape is 2 it will print a square with a box around it
         for (i = 0; i < 35; i++) {
             for (j = 0; j < 35; j++) {
                 mvprintw(row, column, "%c", s[i][j]);                   
@@ -396,7 +378,7 @@ void randomShapes(int *index){
         }
         refresh();
         sleep(1);  
-    } else if(shape == 3){
+    } else if(shape == 3){//if shape is 3 it will print a x with a box around it
         for (i = 0; i < 35; i++) {
             for (j = 0; j < 35; j++) {
                 mvprintw(row, column, "%c", x[i][j]);                 
@@ -407,7 +389,7 @@ void randomShapes(int *index){
         } 
         refresh();
         sleep(1); 
-    } else if (shape == 4) {
+    } else if (shape == 4) {//if shape is 4 it will print a circle with a box around it
         for (i = 0; i < 35; i++) {
             for (j = 0; j < 35; j++) {
                 mvprintw(row, column, "%c", c[i][j]);
@@ -419,8 +401,7 @@ void randomShapes(int *index){
         refresh();
         sleep(1);
     }
-    // wclear(my_window);
-    endwin();
+    endwin();//ends the ncurses window to go back to the console
 }
 
 void trimws(char* str) { // Trims the white space of the text file.

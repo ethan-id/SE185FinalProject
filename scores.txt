@@ -1,4 +1,4 @@
-0
+99
 BOB
 88
 GOB
@@ -12,9 +12,9 @@ FSH
 PCK
 56
 DEF
-10
-ABC
-6
-CUM
-5
-PEN
+21
+FED
+05
+CHK
+02
+PEP
